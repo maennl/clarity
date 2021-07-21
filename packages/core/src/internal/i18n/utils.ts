@@ -6,5 +6,5 @@
 import { getCssPropertyValue } from '../utils/css.js';
 
 export function getElementLanguageDirection(element: HTMLElement) {
-  return getCssPropertyValue('direction', element);
+  return getCssPropertyValue('direction', element); // todo cory: kills perf on datagrid
 }

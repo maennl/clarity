@@ -196,7 +196,7 @@ describe('cds-control', () => {
 
   it('should adjust style for RTL language support', async () => {
     expect(control.shadowRoot.querySelector('.rtl')).toBe(null);
-    control.style.direction = 'rtl';
+    control.dir = 'rtl';
     control.requestUpdate();
     await componentIsStable(control);
     expect(control.shadowRoot.querySelector('.rtl')).toBeTruthy();

@@ -9,9 +9,11 @@
   --height: #{$cds-global-space-7};
   --border: #{$cds-alias-object-border-width-100} solid #{$cds-alias-object-interaction-border-color};
   --background: none;
+  --cursor: pointer;
 }
 
 .input {
+  cursor: var(--cursor);
   width: var(--width);
   height: var(--height);
   min-width: var(--width); // for compact forms with long text
@@ -19,7 +21,6 @@
   background: var(--background);
   border-radius: #{$cds-alias-object-border-radius-300};
   content: '';
-  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;

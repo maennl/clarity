@@ -12,17 +12,18 @@ import {
   querySlot,
   querySlotAll,
   childrenUpdateComplete,
-  getElementLanguageDirection,
   event,
   EventEmitter,
   describeElementByElements,
-  updateComponentLayout,
   state,
   syncProps,
   pxToRem,
   getElementUpdates,
   hasAriaLabelTypeAttr,
+  calculateOptimalLayout,
+  responsive,
 } from '@cds/core/internal';
+import { CdsControlAction } from '../control-action/control-action.element.js';
 import { CdsControlMessage } from './../control-message/control-message.element.js';
 import styles from './control.element.scss';
 import { ControlStatus, ControlLayout, ControlWidth } from './../utils/interfaces.js';
@@ -38,7 +39,6 @@ import {
   getCurrentMessageStatus,
 } from '../utils/utils.js';
 import { CdsInternalControlLabel } from '../control-label/control-label.element.js';
-import { CdsControlAction } from '../control-action/control-action.element.js';
 
 export const enum ControlLabelLayout {
   default = 'default',
@@ -64,6 +64,7 @@ export const enum ControlLabelLayout {
  * @slot - For projecting input and label
  * @cssprop --label-width
  */
+@responsive<CdsControl>()
 export class CdsControl extends LitElement {
   /**
    * Set the status of form control validation
@@ -115,11 +116,6 @@ export class CdsControl extends LitElement {
   @state() protected fixedControlWidth = false;
 
   @state() protected supportsPrefixSuffixActions = true;
-
-  @state()
-  protected get isRTL() {
-    return getElementLanguageDirection(this) === 'rtl';
-  }
 
   /** @private */
   @state() labelLayout: ControlLabelLayout = ControlLabelLayout.default;
@@ -182,7 +178,7 @@ export class CdsControl extends LitElement {
         : ''}
       <div
         cds-layout="${this.layout === 'vertical' ? 'vertical gap:xs' : 'horizontal gap:lg'} align:stretch"
-        class="private-host ${this.isRTL ? 'rtl' : ''}"
+        class="private-host ${this.dir}"
       >
         ${this.primaryLabelTemplate}
         <div
@@ -348,10 +344,10 @@ export class CdsControl extends LitElement {
     await childrenUpdateComplete(this.controlActions);
 
     if (!this.isGenericControl && this.supportsPrefixSuffixActions && this.hasControlActions) {
-      const start = pxToRem(this.prefixAction.getBoundingClientRect().width + 6);
-      const end = pxToRem(this.suffixAction.getBoundingClientRect().width + 6);
-      this.inputControl.style.setProperty('padding-left', this.isRTL ? end : start, 'important');
-      this.inputControl.style.setProperty('padding-right', this.isRTL ? start : end, 'important');
+      const start = pxToRem(this.prefixAction.offsetWidth + 6); // todo: perf
+      const end = pxToRem(this.suffixAction.offsetWidth + 6);
+      this.inputControl.style.setProperty('padding-left', this.dir === 'rtl' ? end : start, 'important');
+      this.inputControl.style.setProperty('padding-right', this.dir === 'rtl' ? start : end, 'important');
     }
   }
 
@@ -366,10 +362,13 @@ export class CdsControl extends LitElement {
   private setupResponsive() {
     if (this.responsive && this.labelLayout === ControlLabelLayout.default && this.controlLabel) {
       const layoutConfig = { layouts: formLayouts, initialLayout: this.layout };
-      const observer = updateComponentLayout(this, layoutConfig, () =>
-        this.layoutChange.emit(this.layout, { bubbles: true })
-      );
-      this.observers.push(observer);
+      this.addEventListener('cdsResizeChange', () => {
+        calculateOptimalLayout(this, layoutConfig).then(updated => {
+          if (updated) {
+            this.layoutChange.emit(this.layout, { bubbles: true });
+          }
+        });
+      });
     }
   }
 

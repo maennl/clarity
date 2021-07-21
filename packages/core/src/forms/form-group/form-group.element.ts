@@ -106,6 +106,11 @@ export class CdsFormGroup extends LitElement {
 
   updated(props: PropertyValues<this>) {
     super.updated(props);
+
+    if (this.dir !== '') {
+      props.set('dir', this.dir);
+    }
+
     syncDefinedProps(props, this, this.controlsAndGroups);
   }
 

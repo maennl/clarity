@@ -68,6 +68,7 @@ import {
   viewColumnsIcon,
   windowCloseIcon,
 } from '@cds/core/icon';
+import {ClrDatagridColumnSettings} from "./datagrid-column-settings";
 
 export const CLR_DATAGRID_DIRECTIVES: Type<any>[] = [
   // Core
@@ -91,6 +92,7 @@ export const CLR_DATAGRID_DIRECTIVES: Type<any>[] = [
   ClrDatagridPlaceholder,
   ClrDatagridColumnToggleButton,
   ClrDatagridColumnToggleTitle,
+  ClrDatagridColumnSettings,
   ClrDatagridDetail,
   ClrIfDetail,
   ClrDatagridDetailHeader,

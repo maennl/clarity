@@ -16,7 +16,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   OnChanges,
-  SimpleChanges,
+  SimpleChanges, TemplateRef,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 
@@ -47,26 +47,26 @@ import { DetailService } from './providers/detail.service';
       <button class="datagrid-column-title" *ngIf="sortable" (click)="sort()" type="button">
         <ng-container *ngTemplateOutlet="columnTitle"></ng-container>
         <cds-icon
-          *ngIf="sortDirection"
-          shape="arrow"
-          [attr.direction]="sortDirection"
-          aria-hidden="true"
-          class="sort-icon"
+            *ngIf="sortDirection"
+            shape="arrow"
+            [attr.direction]="sortDirection"
+            aria-hidden="true"
+            class="sort-icon"
         ></cds-icon>
       </button>
       <!-- I'm really not happy with that select since it's not very scalable -->
       <ng-content select="clr-dg-filter, clr-dg-string-filter, clr-dg-numeric-filter"></ng-content>
 
       <clr-dg-string-filter
-        *ngIf="field && !customFilter && colType == 'string'"
-        [clrDgStringFilter]="registered"
-        [(clrFilterValue)]="filterValue"
+          *ngIf="field && !customFilter && colType == 'string'"
+          [clrDgStringFilter]="registered"
+          [(clrFilterValue)]="filterValue"
       ></clr-dg-string-filter>
 
       <clr-dg-numeric-filter
-        *ngIf="field && !customFilter && colType == 'number'"
-        [clrDgNumericFilter]="registered"
-        [(clrFilterValue)]="filterValue"
+          *ngIf="field && !customFilter && colType == 'number'"
+          [clrDgNumericFilter]="registered"
+          [(clrFilterValue)]="filterValue"
       ></clr-dg-numeric-filter>
 
       <ng-template #columnTitle>
@@ -76,6 +76,10 @@ import { DetailService } from './providers/detail.service';
       <span class="datagrid-column-title" *ngIf="!sortable">
         <ng-container *ngTemplateOutlet="columnTitle"></ng-container>
       </span>
+
+      <clr-dg-column-settings *ngIf="columnSettings!==null && columnSettings!==undefined">
+        <ng-container *ngTemplateOutlet="columnSettings"></ng-container>
+      </clr-dg-column-settings>
 
       <clr-dg-column-separator *ngIf="showSeparator"></clr-dg-column-separator>
     </div>
@@ -103,6 +107,22 @@ export class ClrDatagridColumn<T = any>
     super(filters);
     this.subscriptions.push(this.listenForSortingChanges());
     this.subscriptions.push(this.listenForDetailPaneChanges());
+  }
+
+
+  private _columnSettings:TemplateRef<any>|null=null;
+
+  get columnSettings(): TemplateRef<any> | null {
+    return this._columnSettings;
+  }
+
+  @Input()
+  set columnSettings(value: TemplateRef<any> | null) {
+    if(this._columnSettings !== value) {
+      this._columnSettings = value;
+      // Have to manually change because of OnPush
+      this.changeDetectorRef.markForCheck();
+    }
   }
 
   public showSeparator = true;

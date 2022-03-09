@@ -6,7 +6,7 @@
     "npm": ">= 6.14.0"
   },
   "scripts": {
-    "start": "ng serve dev",
+    "start": "ng serve dev --watch",
     "start:website": "ng serve website",
     "website:news": "node projects/website/generate-news",
     "test:angular": "ng test clr-angular --watch false --source-map=false",

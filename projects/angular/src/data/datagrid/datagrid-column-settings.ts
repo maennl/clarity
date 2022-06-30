@@ -4,21 +4,19 @@
  * The full license information can be found in LICENSE in the root directory of this project.
  */
 import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
+  ElementRef,
   EventEmitter,
-  Input,
-  Output,
   Inject,
+  Input,
   OnDestroy,
+  Output,
   PLATFORM_ID,
   ViewChild,
-  ElementRef,
 } from '@angular/core';
 
-import { ClrDatagridFilterInterface } from './interfaces/filter.interface';
-import { CustomFilter } from './providers/custom-filter';
-import { FiltersProvider, RegisteredFilter } from './providers/filters';
-import { DatagridFilterRegistrar } from './utils/datagrid-filter-registrar';
 import { ClrPopoverPosition } from '../../utils/popover/interfaces/popover-position.interface';
 import { ClrAxis } from '../../utils/popover/enums/axis.enum';
 import { ClrSide } from '../../utils/popover/enums/side.enum';
@@ -48,7 +46,7 @@ import { isPlatformBrowser } from '@angular/common';
       clrPopoverOpenCloseButton
       [class.datagrid-settings-open]="open"
     >
-      <cds-icon [attr.shape]="'wrench'" solid></cds-icon>
+      <cds-icon shape="wrench" solid></cds-icon>
     </button>
 
     <div
@@ -59,7 +57,7 @@ import { isPlatformBrowser } from '@angular/common';
       role="dialog"
       [attr.aria-label]="commonStrings.keys.datagridSettingsDialogAriaLabel"
     >
-      <div class="datagrid-settings-close-wrapper">
+      <div class="datagrid-settings-close-wrapper" *ngIf="showCloseButton">
         <button type="button" class="close" clrPopoverCloseButton>
           <cds-icon shape="window-close" [attr.title]="commonStrings.keys.close"></cds-icon>
         </button>
@@ -68,6 +66,8 @@ import { isPlatformBrowser } from '@angular/common';
       <ng-content></ng-content>
     </div>
   `,
+  providers: [UNIQUE_ID_PROVIDER],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ClrDatagridColumnSettings implements OnDestroy {
   private subs: Subscription[] = [];
@@ -77,7 +77,8 @@ export class ClrDatagridColumnSettings implements OnDestroy {
     public commonStrings: ClrCommonStringsService,
     private smartToggleService: ClrPopoverToggleService,
     @Inject(PLATFORM_ID) private platformId: any,
-    @Inject(UNIQUE_ID) public popoverId: string
+    @Inject(UNIQUE_ID) public popoverId: string,
+    public changeDetectorRef: ChangeDetectorRef
   ) {
     this.subs.push(
       smartToggleService.openChange.subscribe(change => {
@@ -114,10 +115,26 @@ export class ClrDatagridColumnSettings implements OnDestroy {
       }
       // keep track of the state
       this._open = open;
+      this.changeDetectorRef.markForCheck();
     }
   }
 
   @Output('clrDgSettingsOpenChange') public openChange = new EventEmitter<boolean>(false);
+
+  private _showCloseButton = false;
+
+  get showCloseButton(): boolean {
+    return this._showCloseButton;
+  }
+
+  @Input()
+  set showCloseButton(value: boolean) {
+    value = !!value;
+    if (this._showCloseButton !== value) {
+      this._showCloseButton = value;
+      this.changeDetectorRef.markForCheck();
+    }
+  }
 
   ngOnDestroy(): void {
     this.subs.forEach(sub => sub.unsubscribe());

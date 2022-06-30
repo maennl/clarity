@@ -445,12 +445,14 @@ export interface ClrCommonStrings {
     current: string;
     currentPage: string;
     danger: string;
+    datagridColumnSettingsAriaLabel: string;
     datagridExpandableBeginningOf?: string;
     datagridExpandableEndOf?: string;
     datagridExpandableRowContent?: string;
     datagridExpandableRowsHelperText?: string;
     datagridFilterAriaLabel?: string;
     datagridFilterDialogAriaLabel?: string;
+    datagridSettingsDialogAriaLabel: string;
     dategridExpandableBeginningOf?: string;
     dategridExpandableEndOf?: string;
     dategridExpandableRowContent?: string;
@@ -655,6 +657,8 @@ export declare class ClrDatagridColumn<T = any> extends DatagridFilterRegistrar<
     get ariaSort(): "none" | "ascending" | "descending";
     get colType(): 'string' | 'number';
     set colType(value: 'string' | 'number');
+    get columnSettings(): TemplateRef<any> | null;
+    set columnSettings(value: TemplateRef<any> | null);
     commonStrings: ClrCommonStringsService;
     customFilter: boolean;
     get field(): string;
@@ -681,7 +685,7 @@ export declare class ClrDatagridColumn<T = any> extends DatagridFilterRegistrar<
     ngOnDestroy(): void;
     ngOnInit(): void;
     sort(reverse?: boolean): void;
-    static ɵcmp: i0.ɵɵComponentDeclaration<ClrDatagridColumn<any>, "clr-dg-column", never, { "colType": "clrDgColType"; "field": "clrDgField"; "sortBy": "clrDgSortBy"; "sorted": "clrDgSorted"; "sortOrder": "clrDgSortOrder"; "updateFilterValue": "clrFilterValue"; }, { "sortedChange": "clrDgSortedChange"; "sortOrderChange": "clrDgSortOrderChange"; "filterValueChange": "clrFilterValueChange"; }, ["projectedFilter"], ["clr-dg-filter, clr-dg-string-filter, clr-dg-numeric-filter", "*"]>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<ClrDatagridColumn<any>, "clr-dg-column", never, { "columnSettings": "columnSettings"; "colType": "clrDgColType"; "field": "clrDgField"; "sortBy": "clrDgSortBy"; "sorted": "clrDgSorted"; "sortOrder": "clrDgSortOrder"; "updateFilterValue": "clrFilterValue"; }, { "sortedChange": "clrDgSortedChange"; "sortOrderChange": "clrDgSortOrderChange"; "filterValueChange": "clrFilterValueChange"; }, ["projectedFilter"], ["clr-dg-filter, clr-dg-string-filter, clr-dg-numeric-filter", "*"]>;
     static ɵfac: i0.ɵɵFactoryDeclaration<ClrDatagridColumn<any>, never>;
 }
 
@@ -697,6 +701,24 @@ export declare class ClrDatagridColumnSeparator implements AfterViewInit, OnDest
     showTracker(): void;
     static ɵcmp: i0.ɵɵComponentDeclaration<ClrDatagridColumnSeparator, "clr-dg-column-separator", never, {}, {}, never, never>;
     static ɵfac: i0.ɵɵFactoryDeclaration<ClrDatagridColumnSeparator, never>;
+}
+
+export declare class ClrDatagridColumnSettings implements OnDestroy {
+    anchor: ElementRef;
+    ariaExpanded: boolean;
+    changeDetectorRef: ChangeDetectorRef;
+    commonStrings: ClrCommonStringsService;
+    get open(): boolean;
+    set open(open: boolean);
+    openChange: EventEmitter<boolean>;
+    popoverId: string;
+    get showCloseButton(): boolean;
+    set showCloseButton(value: boolean);
+    smartPosition: ClrPopoverPosition;
+    constructor(commonStrings: ClrCommonStringsService, smartToggleService: ClrPopoverToggleService, platformId: any, popoverId: string, changeDetectorRef: ChangeDetectorRef);
+    ngOnDestroy(): void;
+    static ɵcmp: i0.ɵɵComponentDeclaration<ClrDatagridColumnSettings, "clr-dg-column-settings", never, { "open": "clrDgSettingsOpen"; "showCloseButton": "showCloseButton"; }, { "openChange": "clrDgSettingsOpenChange"; }, never, ["*"]>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<ClrDatagridColumnSettings, never>;
 }
 
 export declare class ClrDatagridColumnToggle implements OnDestroy {
@@ -835,7 +857,7 @@ export declare class ClrDatagridModule {
     constructor();
     static ɵfac: i0.ɵɵFactoryDeclaration<ClrDatagridModule, never>;
     static ɵinj: i0.ɵɵInjectorDeclaration<ClrDatagridModule>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<ClrDatagridModule, [typeof i1.ClrDatagrid, typeof i2.ClrDatagridActionBar, typeof i3.ClrDatagridActionOverflow, typeof i4.ClrDatagridColumn, typeof i5.ClrDatagridColumnSeparator, typeof i6.ClrDatagridColumnToggle, typeof i7.ClrDatagridHideableColumn, typeof i8.ClrDatagridFilter, typeof i9.ClrDatagridItems, typeof i10.ClrDatagridItemsTrackBy, typeof i11.ClrDatagridRow, typeof i12.ClrDatagridRowDetail, typeof i13.DatagridDetailRegisterer, typeof i14.ClrDatagridCell, typeof i15.ClrDatagridFooter, typeof i16.ClrDatagridPagination, typeof i17.ClrDatagridPageSize, typeof i18.ClrDatagridPlaceholder, typeof i19.ClrDatagridColumnToggleButton, typeof i20.ClrDatagridColumnToggleTitle, typeof i21.ClrDatagridDetail, typeof i22.ClrIfDetail, typeof i23.ClrDatagridDetailHeader, typeof i24.ClrDatagridDetailBody, typeof i25.WrappedCell, typeof i26.WrappedColumn, typeof i27.WrappedRow, typeof i28.DatagridMainRenderer, typeof i29.DatagridHeaderRenderer, typeof i30.DatagridRowRenderer, typeof i31.DatagridCellRenderer, typeof i32.DatagridWillyWonka, typeof i33.ActionableOompaLoompa, typeof i34.ExpandableOompaLoompa, typeof i35.DatagridStringFilter, typeof i36.DatagridNumericFilter], [typeof i37.CommonModule, typeof i38.ClrIconModule, typeof i39.ClrFormsModule, typeof i40.FormsModule, typeof i41.ClrLoadingModule, typeof i42.ClrConditionalModule, typeof i43.ClrOutsideClickModule, typeof i44.ClrExpandableAnimationModule, typeof i45.ClrDragAndDropModule, typeof i46.ClrSpinnerModule, typeof i47.ClrPopoverModuleNext, typeof i48.ClrFocusTrapModule, typeof i49.ClrFocusOnViewInitModule], [typeof i1.ClrDatagrid, typeof i2.ClrDatagridActionBar, typeof i3.ClrDatagridActionOverflow, typeof i4.ClrDatagridColumn, typeof i5.ClrDatagridColumnSeparator, typeof i6.ClrDatagridColumnToggle, typeof i7.ClrDatagridHideableColumn, typeof i8.ClrDatagridFilter, typeof i9.ClrDatagridItems, typeof i10.ClrDatagridItemsTrackBy, typeof i11.ClrDatagridRow, typeof i12.ClrDatagridRowDetail, typeof i13.DatagridDetailRegisterer, typeof i14.ClrDatagridCell, typeof i15.ClrDatagridFooter, typeof i16.ClrDatagridPagination, typeof i17.ClrDatagridPageSize, typeof i18.ClrDatagridPlaceholder, typeof i19.ClrDatagridColumnToggleButton, typeof i20.ClrDatagridColumnToggleTitle, typeof i21.ClrDatagridDetail, typeof i22.ClrIfDetail, typeof i23.ClrDatagridDetailHeader, typeof i24.ClrDatagridDetailBody, typeof i25.WrappedCell, typeof i26.WrappedColumn, typeof i27.WrappedRow, typeof i28.DatagridMainRenderer, typeof i29.DatagridHeaderRenderer, typeof i30.DatagridRowRenderer, typeof i31.DatagridCellRenderer, typeof i32.DatagridWillyWonka, typeof i33.ActionableOompaLoompa, typeof i34.ExpandableOompaLoompa, typeof i35.DatagridStringFilter, typeof i36.DatagridNumericFilter]>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<ClrDatagridModule, [typeof i1.ClrDatagrid, typeof i2.ClrDatagridActionBar, typeof i3.ClrDatagridActionOverflow, typeof i4.ClrDatagridColumn, typeof i5.ClrDatagridColumnSeparator, typeof i6.ClrDatagridColumnToggle, typeof i7.ClrDatagridHideableColumn, typeof i8.ClrDatagridFilter, typeof i9.ClrDatagridItems, typeof i10.ClrDatagridItemsTrackBy, typeof i11.ClrDatagridRow, typeof i12.ClrDatagridRowDetail, typeof i13.DatagridDetailRegisterer, typeof i14.ClrDatagridCell, typeof i15.ClrDatagridFooter, typeof i16.ClrDatagridPagination, typeof i17.ClrDatagridPageSize, typeof i18.ClrDatagridPlaceholder, typeof i19.ClrDatagridColumnToggleButton, typeof i20.ClrDatagridColumnToggleTitle, typeof i21.ClrDatagridColumnSettings, typeof i22.ClrDatagridDetail, typeof i23.ClrIfDetail, typeof i24.ClrDatagridDetailHeader, typeof i25.ClrDatagridDetailBody, typeof i26.WrappedCell, typeof i27.WrappedColumn, typeof i28.WrappedRow, typeof i29.DatagridMainRenderer, typeof i30.DatagridHeaderRenderer, typeof i31.DatagridRowRenderer, typeof i32.DatagridCellRenderer, typeof i33.DatagridWillyWonka, typeof i34.ActionableOompaLoompa, typeof i35.ExpandableOompaLoompa, typeof i36.DatagridStringFilter, typeof i37.DatagridNumericFilter], [typeof i38.CommonModule, typeof i39.ClrIconModule, typeof i40.ClrFormsModule, typeof i41.FormsModule, typeof i42.ClrLoadingModule, typeof i43.ClrConditionalModule, typeof i44.ClrOutsideClickModule, typeof i45.ClrExpandableAnimationModule, typeof i46.ClrDragAndDropModule, typeof i47.ClrSpinnerModule, typeof i48.ClrPopoverModuleNext, typeof i49.ClrFocusTrapModule, typeof i50.ClrFocusOnViewInitModule], [typeof i1.ClrDatagrid, typeof i2.ClrDatagridActionBar, typeof i3.ClrDatagridActionOverflow, typeof i4.ClrDatagridColumn, typeof i5.ClrDatagridColumnSeparator, typeof i6.ClrDatagridColumnToggle, typeof i7.ClrDatagridHideableColumn, typeof i8.ClrDatagridFilter, typeof i9.ClrDatagridItems, typeof i10.ClrDatagridItemsTrackBy, typeof i11.ClrDatagridRow, typeof i12.ClrDatagridRowDetail, typeof i13.DatagridDetailRegisterer, typeof i14.ClrDatagridCell, typeof i15.ClrDatagridFooter, typeof i16.ClrDatagridPagination, typeof i17.ClrDatagridPageSize, typeof i18.ClrDatagridPlaceholder, typeof i19.ClrDatagridColumnToggleButton, typeof i20.ClrDatagridColumnToggleTitle, typeof i21.ClrDatagridColumnSettings, typeof i22.ClrDatagridDetail, typeof i23.ClrIfDetail, typeof i24.ClrDatagridDetailHeader, typeof i25.ClrDatagridDetailBody, typeof i26.WrappedCell, typeof i27.WrappedColumn, typeof i28.WrappedRow, typeof i29.DatagridMainRenderer, typeof i30.DatagridHeaderRenderer, typeof i31.DatagridRowRenderer, typeof i32.DatagridCellRenderer, typeof i33.DatagridWillyWonka, typeof i34.ActionableOompaLoompa, typeof i35.ExpandableOompaLoompa, typeof i36.DatagridStringFilter, typeof i37.DatagridNumericFilter]>;
 }
 
 export interface ClrDatagridNumericFilterInterface<T> {

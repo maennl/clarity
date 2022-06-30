@@ -67,8 +67,9 @@ import {
   timesIcon,
   viewColumnsIcon,
   windowCloseIcon,
+  wrenchIcon,
 } from '@cds/core/icon';
-import {ClrDatagridColumnSettings} from "./datagrid-column-settings";
+import { ClrDatagridColumnSettings } from './datagrid-column-settings';
 
 export const CLR_DATAGRID_DIRECTIVES: Type<any>[] = [
   // Core
@@ -148,7 +149,8 @@ export class ClrDatagridModule {
       stepForward2Icon,
       angleDoubleIcon,
       filterGridCircleIcon,
-      filterGridIcon
+      filterGridIcon,
+      wrenchIcon
     );
   }
 }

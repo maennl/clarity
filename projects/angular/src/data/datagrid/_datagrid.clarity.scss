@@ -671,8 +671,7 @@
       clr-dg-filter,
       clr-dg-string-filter,
       clr-dg-numeric-filter,
-      clr-dg-column-settings
-      {
+      clr-dg-column-settings {
         display: flex;
         order: 99;
         margin-left: auto;
@@ -688,8 +687,7 @@
       }
 
       .datagrid-filter-toggle,
-      .datagrid-settings-toggle
-      {
+      .datagrid-settings-toggle {
         @include clr-no-styles-button();
         cursor: pointer;
         float: right;
@@ -712,8 +710,7 @@
         }
 
         &.datagrid-filter-open,
-        &.datagrid-settings-open
-        {
+        &.datagrid-settings-open {
           cds-icon,
           clr-icon {
             @include css-var(color, clr-color-action-600, $clr-color-action-600, $clr-use-custom-properties);
@@ -728,7 +725,7 @@
         }
       }
 
-      .datagrid-filter ,
+      .datagrid-filter,
       .datagrid-settings {
         top: 100%;
         right: 0;
@@ -753,8 +750,7 @@
         font-weight: normal;
 
         .datagrid-filter-close-wrapper,
-        .datagrid-settings-close-wrapper,
-        {
+        .datagrid-settings-close-wrapper {
           text-align: right;
 
           .close {
@@ -769,8 +765,7 @@
       }
 
       .datagrid-filter,
-      .datagrid-settings,
-      {
+      .datagrid-settings {
         top: 100%;
         right: 0;
         margin-top: $clr_baselineRem_0_2;
@@ -794,8 +789,7 @@
         font-weight: normal;
 
         .datagrid-filter-close-wrapper,
-        .datagrid-settings-close-wrapper,
-        {
+        .datagrid-settings-close-wrapper {
           text-align: right;
 
           .close {
@@ -810,8 +804,7 @@
       }
 
       .datagrid-filter,
-      .datagrid-settings,
-      {
+      .datagrid-settings {
         top: 100%;
         right: 0;
         margin-top: $clr_baselineRem_0_2;
@@ -835,8 +828,7 @@
         font-weight: normal;
 
         .datagrid-filter-close-wrapper,
-        .datagrid-settings-close-wrapper
-        {
+        .datagrid-settings-close-wrapper {
           text-align: right;
 
           .close {

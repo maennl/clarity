@@ -4,6 +4,7 @@
  * The full license information can be found in LICENSE in the root directory of this project.
  */
 
+import { isPlatformBrowser } from '@angular/common';
 import {
   AfterContentInit,
   Component,
@@ -11,16 +12,15 @@ import {
   DoCheck,
   ElementRef,
   EventEmitter,
+  Inject,
   Input,
   IterableDiffers,
   OnDestroy,
   Output,
+  PLATFORM_ID,
   QueryList,
   ViewChild,
-  PLATFORM_ID,
-  Inject,
 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { UNIQUE_ID, UNIQUE_ID_PROVIDER } from '../utils/id-generator/id-generator.service';
@@ -452,7 +452,7 @@ export class ClrWizard implements OnDestroy, AfterContentInit, DoCheck {
    */
   public reset(): void {
     this.pageCollection.reset();
-    this.onReset.next();
+    this.onReset.next(undefined);
   }
 
   private listenForNextPageChanges(): Subscription {

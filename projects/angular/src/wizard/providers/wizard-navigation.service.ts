@@ -5,8 +5,7 @@
  */
 
 import { Injectable, OnDestroy, TemplateRef } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
-import { Subscription } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 
 import { ClrWizardPage } from '../wizard-page';
 
@@ -397,7 +396,7 @@ export class WizardNavigationService implements OnDestroy {
       if (!this.wizardHasAltNext) {
         this.pageCollection.commitPage(currentPage);
       }
-      this._wizardFinished.next();
+      this._wizardFinished.next(undefined);
     }
 
     if (this.wizardHasAltNext) {
@@ -508,7 +507,7 @@ export class WizardNavigationService implements OnDestroy {
    * @memberof WizardNavigationService
    */
   public cancel(): void {
-    this._cancelWizard.next();
+    this._cancelWizard.next(undefined);
   }
 
   /**

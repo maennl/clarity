@@ -7,20 +7,20 @@
 import {
   Component,
   ContentChildren,
+  ElementRef,
   EventEmitter,
   HostListener,
   Input,
   Output,
   QueryList,
-  ElementRef,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
+
+import { KeyCodes } from '../../enums/key-codes.enum';
 import { ClrFocusDirection } from './enums/focus-direction.enum';
 import { FocusableItem } from './interfaces';
-
-import { KeyCodes } from './../../enums/key-codes.enum';
 import { ClrKeyFocusItem } from './key-focus-item';
-import { preventArrowKeyScroll, keyValidator } from './util';
+import { keyValidator, preventArrowKeyScroll } from './util';
 
 @Component({
   selector: '[clrKeyFocus]',
@@ -168,7 +168,7 @@ export class ClrKeyFocus {
 
       if (this.focusOnLoad) {
         this.currentItem.focus();
-        this.focusChange.next();
+        this.focusChange.next(undefined);
       }
     }
   }
